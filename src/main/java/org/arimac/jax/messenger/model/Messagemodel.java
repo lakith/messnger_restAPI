@@ -1,7 +1,9 @@
 package org.arimac.jax.messenger.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,7 +17,66 @@ public class Messagemodel {
 	private Date created;
 	private String author;
 	private Map<Long, Comment> comments = new HashMap<>();
+	private List<Link> linklist = new ArrayList<Link>();
 	
+	
+	
+	public Messagemodel(long id, String message, Date created, String author,
+			Map<Long, Comment> comments, List<Link> linklist) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.created = created;
+		this.author = author;
+		this.comments = comments;
+		this.linklist = linklist;
+	}
+	
+	
+
+	public Messagemodel(String message, Date created, String author,
+			Map<Long, Comment> comments, List<Link> linklist) {
+		super();
+		this.message = message;
+		this.created = created;
+		this.author = author;
+		this.comments = comments;
+		this.linklist = linklist;
+	}
+
+
+
+	public Messagemodel(long id, String message, String author,
+			Map<Long, Comment> comments, List<Link> linklist) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.author = author;
+		this.comments = comments;
+		this.linklist = linklist;
+	}
+
+
+
+	public Messagemodel(String message, String author,
+			Map<Long, Comment> comments, List<Link> linklist) {
+		super();
+		this.message = message;
+		this.author = author;
+		this.comments = comments;
+		this.linklist = linklist;
+	}
+
+
+
+	public List<Link> getLinklist() {
+		return linklist;
+	}
+
+	public void setLinklist(List<Link> linklist) {
+		this.linklist = linklist;
+	}
+
 	@XmlTransient
 	public Map<Long, Comment> getComments() {
 		return comments;
@@ -77,6 +138,12 @@ public class Messagemodel {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	public void addLink(String url,String rel){
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		linklist.add(link);
 	}
 	
 }

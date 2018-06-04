@@ -12,8 +12,8 @@ public class profileService {
 	private static Map<String,Profile> profiles = DatabaseClass.getProfiles();
 	
 	public profileService(){
-		Profile m1 = new Profile(1L,"Lakith","Muthugala","lakithmuthugala");
-		Profile m2 = new Profile(2L,"Himasu","Chamath","himasuchamath");
+		Profile m1 = new Profile(1L,"Lakith","Muthugala","lakith");
+		Profile m2 = new Profile(2L,"Himasu","Chamath","himasu");
 		profiles.put(m1.getProfilename(), m1);
 		profiles.put(m2.getProfilename(), m2);
 	}

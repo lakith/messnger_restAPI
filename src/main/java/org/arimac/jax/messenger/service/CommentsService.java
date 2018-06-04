@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import org.arimac.jax.messenger.database.DatabaseClass;
 import org.arimac.jax.messenger.model.Comment;
+import org.arimac.jax.messenger.model.ErrorMessage;
 import org.arimac.jax.messenger.model.Messagemodel;
 
 public class CommentsService {
@@ -31,10 +38,28 @@ public class CommentsService {
 	}
 	
 	public Comment getComment(long messageID, long commentId){
+		
+		Messagemodel message = messages.get(messageID);
+		
+		ErrorMessage error = new ErrorMessage("NOT FOUND",404,"https://www.google.com");
+		
+		Response r1= Response.status(Status.NOT_FOUND)
+					   .entity(error)
+					   .type(MediaType.APPLICATION_JSON)
+					   .build();
+		
+		if(message == null)
+		{
+            throw new WebApplicationException(r1);			
+		}
 		Map<Long,Comment> comments = messages.get(messageID).getComments();
 		comments.put(m3.getId(), c1);
 		comments.put(m4.getId(), c2);
-		return comments.get(commentId);
+		Comment c1 = comments.get(commentId);
+		if(c1==null){
+			throw new NotFoundException(r1);
+		}
+		return c1;
 	}
 	
 	public Comment addComment(long messageId, Comment comment){

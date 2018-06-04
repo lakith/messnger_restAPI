@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.arimac.jax.messenger.database.DatabaseClass;
+import org.arimac.jax.messenger.exeption.DataNotFoundExeption;
 import org.arimac.jax.messenger.model.Messagemodel;
 import org.arimac.jax.messenger.model.Profile;
 
@@ -27,7 +28,13 @@ public class MessagesService {
 	
 	public Messagemodel getMessage(long id)
 	{
-		return messages.get(id);
+		Messagemodel messageModel =  messages.get(id);
+		
+		
+		if(messageModel == null){
+			throw new DataNotFoundExeption("Message id "+id+" Not found");
+		}
+		return messageModel;
 	}
 	public Messagemodel addMessage(Messagemodel message){
 		message.setId(messages.size()+1);
